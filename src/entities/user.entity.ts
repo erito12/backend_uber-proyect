@@ -1,27 +1,41 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Chofer } from './driver.entity';
 
 @Entity('usuarios')
 export class Usuario {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id_usuario: number; // Cambiado a id_usuario para coincidir con la tabla
 
-    @Column({ length: 100 })
-    nombre_completo: string;
+  @Column({ length: 50 })
+  usuario: string;
 
-    @Column({ length: 50, unique: true })
-    usuario: string;
+  @Column({ length: 255, nullable: true })
+  foto_perfil?: string; // Agregado para la foto de perfil
 
-    @Column({ length: 255 })
-    contrasena: string;
+  @Column({ length: 255 })
+  contrasena: string;
 
-    @Column({ length: 100, nullable: true })
-    email?: string;
+  @Column({ length: 100, nullable: true })
+  email?: string;
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    fecha_creacion: Date;
+  @Column({ length: 15, nullable: true }) // Agregado para el número de teléfono
+  numero_telefono?: string;
 
-    @Column({ length: 20 })
-    rol: 'admin' | 'chofer' | 'cliente';
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  fecha_creacion: Date;
 
+  @Column({
+    type: 'enum',
+    enum: ['admin', 'chofer', 'cliente', 'turista'],
+  }) // Ajustado para incluir 'turista'
+  rol: 'admin' | 'chofer' | 'cliente' | 'turista'; // Ajustado para incluir 'turista'
+
+  @OneToMany(() => Chofer, (chofer) => chofer.usuario)
+  choferes: Chofer[];
 }

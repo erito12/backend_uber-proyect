@@ -1,15 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ChoferesModule } from './choferes/choferes.module';
-import { PerfilModule } from './perfil/perfil.module';
+
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './database/database.config';
+import { ChoferModule } from './choferes/choferes.module';
+import { AutomobileModule } from './automobile/automobile.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), ChoferesModule, PerfilModule, UserModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), ChoferModule, UserModule, AutomobileModule],
 })
 export class AppModule {}

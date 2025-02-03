@@ -1,40 +1,36 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   OneToOne,
-
+  JoinColumn,
 } from 'typeorm';
 import { Usuario } from './user.entity';
 
 @Entity('choferes')
 export class Chofer {
   @PrimaryGeneratedColumn()
-  id: number;
+  id_chofer: number;
 
-  @Column({ length: 100 })
-  nombre_completo: string;
+  @OneToOne(() => Usuario, (usuario) => usuario.choferes)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario: Usuario;
 
-  @Column()
-  edad: number;
+  @Column({ length: 50 })
+  licencia_conduccion: string;
 
-  @Column({ length: 20})
-  carne_identidad: string;
+  @Column({ length: 50, nullable: true })
+  licencia_operativa: string;
 
-  @Column({ length: 50})
-  licencia: string;
+  @Column({ type: 'int', default: 0 })
+  annos_experiencia: number;
 
-  @Column({ length: 15})
-  numero_telefono: string;
-
-  @Column({ length: 255})
+  @Column({ length: 255, nullable: true })
   direccion: string;
 
-  @Column()
-  puntuacion: number;
+  @Column({ type: 'int', default: 100 })
+  puntacion: number;
 
-  @Column({length:20})
-  estado:string
-
-
+  @Column({ length: 15, default: 'en linea' })
+  estado: 'en linea' | 'desconectado' | 'ocupado' | 'libre';
 }

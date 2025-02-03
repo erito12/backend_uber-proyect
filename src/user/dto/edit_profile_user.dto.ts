@@ -3,8 +3,6 @@ import { IsOptional, IsString, IsEmail } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUsuarioDto {
-
-
   @ApiProperty({ required: false })
   @IsOptional()
   @IsEmail()
@@ -14,4 +12,14 @@ export class UpdateUsuarioDto {
   @IsOptional()
   @IsString()
   contrasena?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  foto_perfil?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  numero_telefono?: string;
 }
