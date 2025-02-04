@@ -1,5 +1,5 @@
 // src/choferes/chofer.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Chofer } from 'src/entities/driver.entity';
 
@@ -31,5 +31,16 @@ export class ChoferService {
     });
 
     return await this.choferRepository.save(Chofer);
+  }
+
+  async findDriverById(id_chofer: number): Promise<Chofer> {
+    const driver = await this.choferRepository.findOne({
+      where: { id_chofer },
+    });
+
+    if (!driver) {
+      throw new NotFoundException(`Chofer con ID ${id_chofer} no encontrado`);
+    }
+    return driver;
   }
 }

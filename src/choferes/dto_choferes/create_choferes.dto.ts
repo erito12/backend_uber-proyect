@@ -15,7 +15,7 @@ export class CreateChoferDto {
   licencia_conduccion: string;
 
   @ApiProperty({ description: 'Licencia operativa del chofer' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   licencia_operativa: string;
 

@@ -5,8 +5,8 @@ import { ChoferService } from './choferes.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateChoferDto } from './dto_choferes/create_choferes.dto';
 
-@ApiTags('choferes')
-@Controller('choferes')
+@ApiTags('Drivers')
+@Controller('drivers')
 export class ChoferController {
   constructor(private readonly choferService: ChoferService) {}
 

@@ -3,7 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { Chofer } from './driver.entity';
 
@@ -36,6 +36,6 @@ export class Usuario {
   }) // Ajustado para incluir 'turista'
   rol: 'admin' | 'chofer' | 'cliente' | 'turista'; // Ajustado para incluir 'turista'
 
-  @OneToMany(() => Chofer, (chofer) => chofer.usuario)
-  choferes: Chofer[];
+  @OneToOne(() => Chofer, (chofer) => chofer.usuario)
+  chofer: Chofer;
 }

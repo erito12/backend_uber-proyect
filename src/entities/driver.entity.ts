@@ -6,15 +6,12 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Usuario } from './user.entity';
+import { Vehicle } from './vehicles.entity';
 
 @Entity('choferes')
 export class Chofer {
   @PrimaryGeneratedColumn()
   id_chofer: number;
-
-  @OneToOne(() => Usuario, (usuario) => usuario.choferes)
-  @JoinColumn({ name: 'id_usuario' })
-  usuario: Usuario;
 
   @Column({ length: 50 })
   licencia_conduccion: string;
@@ -33,4 +30,11 @@ export class Chofer {
 
   @Column({ length: 15, default: 'en linea' })
   estado: 'en linea' | 'desconectado' | 'ocupado' | 'libre';
+
+  @OneToOne(() => Usuario, (usuario) => usuario.chofer)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario: Usuario;
+
+  @OneToOne(() => Vehicle, (vehicle) => vehicle.driver)
+  vehicle: Vehicle;
 }
