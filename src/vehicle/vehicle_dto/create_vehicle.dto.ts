@@ -8,17 +8,17 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVehicleDto {
-  @ApiProperty({ description: 'Matricula del vehiculo', example: 'dasdasd' })
+  @ApiProperty({ description: 'Matricula del vehiculo', example: 'S143654' })
   @IsNotEmpty()
   @IsString()
   matricula: string;
 
-  @ApiProperty({ description: 'Modelo del vehiculo' })
+  @ApiProperty({ description: 'Modelo del vehiculo', example: 'Lamborjiny' })
   @IsNotEmpty()
   @IsString()
   modelo: string;
 
-  @ApiProperty({ description: 'Capacidad del vehiculo' })
+  @ApiProperty({ description: 'Capacidad del vehiculo', example: 4 })
   @IsInt()
   @IsNotEmpty()
   capacidad: number;

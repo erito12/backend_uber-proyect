@@ -4,6 +4,7 @@ import { ChoferService } from 'src/choferes/choferes.service';
 import { Vehicle } from 'src/entities/vehicles.entity';
 import { Repository } from 'typeorm';
 import { CreateVehicleDto } from './vehicle_dto/create_vehicle.dto';
+import { FilterVehiclesDto } from './vehicle_dto/filter_vehicle.dto';
 
 @Injectable()
 export class VehicleService {
@@ -43,14 +44,39 @@ export class VehicleService {
     return vehicle;
   }
 
-  async findVehicleByMatricula(matricula: string): Promise<Vehicle> {
-    const vehicle = await this.vehicleRepository.findOne({
-      where: { matricula },
-    });
+  async findVehiclesByFilters(filters: FilterVehiclesDto): Promise<Vehicle[]> {
+    const queryBuilder = this.vehicleRepository.createQueryBuilder('vehicle');
 
-    if (!vehicle) {
-      throw new NotFoundException(`Vehiculo con ${matricula} no encontrado`);
+    if (filters.matricula) {
+      queryBuilder.andWhere('vehicle.matricula = :matricula', {
+        matricula: filters.matricula,
+      });
     }
-    return vehicle;
+
+    if (filters.modelo) {
+      queryBuilder.andWhere('vehicle.modelo = :modelo', {
+        modelo: filters.modelo,
+      });
+    }
+
+    const vehicles = await queryBuilder.getMany();
+    console.log('Vehículos encontrados:', vehicles);
+    return vehicles;
+  }
+
+  async findAll(filterDto: FilterVehiclesDto): Promise<Vehicle[]> {
+    const { matricula, modelo } = filterDto;
+
+    const query = this.vehicleRepository.createQueryBuilder('vehicle');
+
+    if (matricula) {
+      query.andWhere('vehicle.matricula = :matricula', { matricula });
+    }
+
+    if (modelo) {
+      query.andWhere('vehicle.modelo = :modelo', { modelo });
+    }
+
+    return await query.getMany();
   }
 }
