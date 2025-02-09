@@ -7,6 +7,8 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
+type ClassVehicle = 'A' | 'B' | 'C' | 'Moto'; // Definición del tipo
+
 export class CreateVehicleDto {
   @ApiProperty({ description: 'Matricula del vehiculo', example: 'S143654' })
   @IsNotEmpty()
@@ -51,4 +53,12 @@ export class CreateVehicleDto {
   @IsBoolean()
   @IsOptional()
   comodidad_asientos?: boolean;
+
+  @ApiProperty({
+    description: 'Clase del vehiculo (A, B, C, Moto)',
+    example: 'C',
+  })
+  @IsNotEmpty()
+  @IsString()
+  class_vehicle: ClassVehicle; // Cambiado a tipo específico
 }

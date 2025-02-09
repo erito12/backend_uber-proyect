@@ -3,10 +3,10 @@ import { VehicleService } from './vehicle.service';
 import { VehicleController } from './vehicle.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Vehicle } from 'src/entities/vehicles.entity';
-import { ChoferModule } from 'src/choferes/choferes.module';
+import { DriverModule } from 'src/drivers/drivers.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Vehicle]), ChoferModule],
+  imports: [TypeOrmModule.forFeature([Vehicle]), DriverModule],
   providers: [VehicleService],
   controllers: [VehicleController],
   exports: [VehicleService],

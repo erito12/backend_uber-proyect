@@ -5,15 +5,16 @@ import {
   CreateDateColumn,
   OneToOne,
 } from 'typeorm';
-import { Chofer } from './driver.entity';
+import { Driver } from './driver.entity';
+import { Request } from './request.entity';
 
 @Entity('usuarios')
-export class Usuario {
+export class User {
   @PrimaryGeneratedColumn()
   id_usuario: number; // Cambiado a id_usuario para coincidir con la tabla
 
   @Column({ length: 50 })
-  usuario: string;
+  userName: string;
 
   @Column({ length: 255, nullable: true })
   foto_perfil?: string; // Agregado para la foto de perfil
@@ -36,6 +37,9 @@ export class Usuario {
   }) // Ajustado para incluir 'turista'
   rol: 'admin' | 'chofer' | 'cliente' | 'turista'; // Ajustado para incluir 'turista'
 
-  @OneToOne(() => Chofer, (chofer) => chofer.usuario)
-  chofer: Chofer;
+  @OneToOne(() => Driver, (driver) => driver.user)
+  driver: Driver;
+
+  @OneToOne(() => Request, (request) => request.user)
+  request: Request;
 }

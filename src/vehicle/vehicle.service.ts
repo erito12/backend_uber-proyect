@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ChoferService } from 'src/choferes/choferes.service';
+import { ChoferService } from 'src/drivers/drivers.service';
 import { Vehicle } from 'src/entities/vehicles.entity';
 import { Repository } from 'typeorm';
 import { CreateVehicleDto } from './vehicle_dto/create_vehicle.dto';
@@ -44,28 +44,10 @@ export class VehicleService {
     return vehicle;
   }
 
-  async findVehiclesByFilters(filters: FilterVehiclesDto): Promise<Vehicle[]> {
-    const queryBuilder = this.vehicleRepository.createQueryBuilder('vehicle');
-
-    if (filters.matricula) {
-      queryBuilder.andWhere('vehicle.matricula = :matricula', {
-        matricula: filters.matricula,
-      });
-    }
-
-    if (filters.modelo) {
-      queryBuilder.andWhere('vehicle.modelo = :modelo', {
-        modelo: filters.modelo,
-      });
-    }
-
-    const vehicles = await queryBuilder.getMany();
-    console.log('Vehículos encontrados:', vehicles);
-    return vehicles;
-  }
-
-  async findAll(filterDto: FilterVehiclesDto): Promise<Vehicle[]> {
-    const { matricula, modelo } = filterDto;
+  async findAll(
+    filterDto: FilterVehiclesDto,
+  ): Promise<{ vehicles: Vehicle[]; total: number }> {
+    const { matricula, modelo, capacidad, page = 1, limit = 10 } = filterDto; // Valores por defecto
 
     const query = this.vehicleRepository.createQueryBuilder('vehicle');
 
@@ -77,6 +59,26 @@ export class VehicleService {
       query.andWhere('vehicle.modelo = :modelo', { modelo });
     }
 
-    return await query.getMany();
+    if (capacidad) {
+      query.andWhere('vehicle.capacidad = :capacidad', { capacidad });
+    }
+
+    // Implementar paginación
+    const [vehicles, total] = await query
+      .skip((page - 1) * limit) // Saltar las entradas de las páginas anteriores
+      .take(limit) // Limitar el número de resultados
+      .getManyAndCount(); // Obtener los resultados y el total
+
+    return { vehicles, total }; // Retornar los vehículos y el total
+  }
+
+  async deleteVehicle(id_vehiculo: number): Promise<void> {
+    const result = await this.vehicleRepository.delete(id_vehiculo);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(
+        `Vehículo con ID ${id_vehiculo} no encontrado`,
+      );
+    }
   }
 }

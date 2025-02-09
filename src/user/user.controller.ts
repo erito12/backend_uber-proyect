@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Patch, Query } from '@nestjs/common';
-import { Usuario } from 'src/entities/user.entity';
+import { User } from 'src/entities/user.entity';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserService } from './user.service';
@@ -14,7 +14,7 @@ export class UserController {
   @Get(':id')
   @ApiResponse({ status: 200, description: 'User logged in successfully.' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado.' })
-  async getUsuario(@Param('id') id: number): Promise<Usuario> {
+  async getUsuario(@Param('id') id: number): Promise<User> {
     return this.UsuarioService.findUsuarioById(id);
   }
 
@@ -22,13 +22,13 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Usuario actualizado exitosamente.',
-    type: Usuario,
+    type: User,
   })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado.' })
   async actualizarUsuario(
     @Param('id') id: number,
     @Query() updateUsuarioDto: UpdateUsuarioDto,
-  ): Promise<Usuario> {
+  ): Promise<User> {
     return this.UsuarioService.actualizarUsuario(id, updateUsuarioDto);
   }
 }

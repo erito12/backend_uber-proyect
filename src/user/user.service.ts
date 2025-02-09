@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Usuario } from 'src/entities/user.entity';
+import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { UpdateUsuarioDto } from './dto/edit_profile_user.dto';
 
@@ -8,38 +8,38 @@ import { UpdateUsuarioDto } from './dto/edit_profile_user.dto';
 export class UserService {
   // Cambiado a PerfilUsuarioService
   constructor(
-    @InjectRepository(Usuario)
-    private usuarioRepository: Repository<Usuario>,
+    @InjectRepository(User)
+    private usuarioRepository: Repository<User>,
   ) {}
 
-  async findUsuarioById(id_usuario: number): Promise<Usuario> {
-    const usuario = await this.usuarioRepository.findOne({
+  async findUsuarioById(id_usuario: number): Promise<User> {
+    const user = await this.usuarioRepository.findOne({
       where: { id_usuario },
     });
 
-    if (!usuario) {
+    if (!user) {
       throw new NotFoundException(`Usuario con ID ${id_usuario} no encontrado`);
     }
 
-    return usuario;
+    return user;
   }
 
   async actualizarUsuario(
     id_usuario: number,
     updateUsuarioDto: UpdateUsuarioDto,
-  ): Promise<Usuario> {
+  ): Promise<User> {
     // Busca el usuario por ID
-    const usuario = await this.usuarioRepository.findOne({
+    const user = await this.usuarioRepository.findOne({
       where: { id_usuario },
     });
-    if (!usuario) {
+    if (!user) {
       throw new Error('Usuario no encontrado');
     }
 
     // Actualiza los campos que se pasaron en el DTO
-    Object.assign(usuario, updateUsuarioDto);
+    Object.assign(user, updateUsuarioDto);
 
     // Guarda los cambios
-    return this.usuarioRepository.save(usuario);
+    return this.usuarioRepository.save(user);
   }
 }

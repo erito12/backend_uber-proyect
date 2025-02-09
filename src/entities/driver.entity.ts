@@ -5,11 +5,11 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { Usuario } from './user.entity';
+import { User } from './user.entity';
 import { Vehicle } from './vehicles.entity';
 
 @Entity('choferes')
-export class Chofer {
+export class Driver {
   @PrimaryGeneratedColumn()
   id_chofer: number;
 
@@ -31,9 +31,9 @@ export class Chofer {
   @Column({ length: 15, default: 'en linea' })
   estado: 'en linea' | 'desconectado' | 'ocupado' | 'libre';
 
-  @OneToOne(() => Usuario, (usuario) => usuario.chofer)
+  @OneToOne(() => User, (user) => user.driver)
   @JoinColumn({ name: 'id_usuario' })
-  usuario: Usuario;
+  user: User;
 
   @OneToOne(() => Vehicle, (vehicle) => vehicle.driver)
   vehicle: Vehicle;

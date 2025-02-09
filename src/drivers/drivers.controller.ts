@@ -1,9 +1,9 @@
 // src/choferes/choferes.controller.ts
 import { Controller, Post, Body, Query } from '@nestjs/common';
-import { Chofer } from 'src/entities/driver.entity';
-import { ChoferService } from './choferes.service';
+import { Driver } from 'src/entities/driver.entity';
+import { ChoferService } from './drivers.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateChoferDto } from './dto_choferes/create_choferes.dto';
+import { CreateChoferDto } from './dto_drivers/create_drivers.dto';
 
 @ApiTags('Drivers')
 @Controller('drivers')
@@ -16,7 +16,7 @@ export class ChoferController {
   async create(
     @Body() createChoferDto: CreateChoferDto,
     @Query('usuarioId') usuarioId: number, // Cambia 'username' y 'password' a 'usuarioId'
-  ): Promise<Chofer> {
+  ): Promise<Driver> {
     return this.choferService.createChofer(createChoferDto, usuarioId); // Llama al método correcto
   }
 }

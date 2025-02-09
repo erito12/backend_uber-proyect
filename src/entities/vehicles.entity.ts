@@ -5,7 +5,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Chofer } from './driver.entity';
+import { Driver } from './driver.entity';
+import { Request } from './request.entity';
 
 @Entity('vehicle')
 export class Vehicle {
@@ -21,6 +22,12 @@ export class Vehicle {
   @Column()
   capacidad: number;
 
+  @Column({
+    type: 'enum',
+    enum: ['A', 'B', 'C', 'Moto'],
+  })
+  class_vehicle: 'A' | 'B' | 'C' | 'Moto';
+
   @Column({ length: 255, nullable: true })
   foto_vehiculo: string;
 
@@ -32,7 +39,11 @@ export class Vehicle {
 
   @Column({ nullable: true })
   comodidad_asientos: boolean;
-  @OneToOne(() => Chofer, (chofer) => chofer.vehicle)
+
+  @OneToOne(() => Driver, (driver) => driver.vehicle)
   @JoinColumn({ name: 'id_chofer' })
-  driver: Chofer;
+  driver: Driver;
+
+  @OneToOne(() => Request, (request) => request.vehicle)
+  request: Request;
 }
