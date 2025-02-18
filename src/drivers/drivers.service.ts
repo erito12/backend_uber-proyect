@@ -2,9 +2,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Driver } from 'src/entities/driver.entity';
-
 import { Repository } from 'typeorm';
-
 import { UserService } from 'src/user/user.service';
 import { CreateChoferDto } from './dto_drivers/create_drivers.dto';
 
@@ -12,11 +10,11 @@ import { CreateChoferDto } from './dto_drivers/create_drivers.dto';
 export class ChoferService {
   constructor(
     @InjectRepository(Driver)
-    private readonly choferRepository: Repository<Driver>,
+    private readonly driverRepository: Repository<Driver>,
     private readonly usuarioService: UserService, // Inyecta el servicio de perfil de usuario
   ) {}
 
-  async createChofer(
+  async createDriver(
     createChoferDto: CreateChoferDto,
     usuarioId: number,
   ): Promise<Driver> {
@@ -26,16 +24,16 @@ export class ChoferService {
       throw new Error('Usuario no encontrado');
     }
 
-    const Driver = this.choferRepository.create({
+    const Driver = this.driverRepository.create({
       ...CreateChoferDto,
       user, // Asocia el chofer al usuario existente
     });
 
-    return await this.choferRepository.save(Driver);
+    return await this.driverRepository.save(Driver);
   }
 
   async findDriverById(id_chofer: number): Promise<Driver> {
-    const driver = await this.choferRepository.findOne({
+    const driver = await this.driverRepository.findOne({
       where: { id_chofer },
     });
 

@@ -8,8 +8,8 @@ import {
 import { Vehicle } from './vehicles.entity';
 import { User } from './user.entity';
 
-@Entity('request')
-export class Request {
+@Entity('solicitudes')
+export class UserRequest {
   @PrimaryGeneratedColumn()
   id_solicitud: number;
 

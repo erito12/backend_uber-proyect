@@ -23,4 +23,18 @@ export class CreateRequestDto {
   @IsNotEmpty()
   @IsString()
   clase_vehiculo: string;
+
+  @ApiProperty({ description: 'Licencia de conducción del chofer' })
+  @IsNotEmpty()
+  @IsString()
+  capacidad_requerida: number;
+  @ApiProperty({ description: 'Licencia de conducción del chofer' })
+  @IsNotEmpty()
+  @IsString()
+  precio: number;
+
+  @ApiProperty({ description: 'Licencia de conducción del chofer' })
+  @IsNotEmpty()
+  @IsString()
+  state_request: 'processing' | 'accepted' | 'confirmed' | 'rejected';
 }

@@ -17,6 +17,6 @@ export class ChoferController {
     @Body() createChoferDto: CreateChoferDto,
     @Query('usuarioId') usuarioId: number, // Cambia 'username' y 'password' a 'usuarioId'
   ): Promise<Driver> {
-    return this.choferService.createChofer(createChoferDto, usuarioId); // Llama al método correcto
+    return this.choferService.createDriver(createChoferDto, usuarioId); // Llama al método correcto
   }
 }

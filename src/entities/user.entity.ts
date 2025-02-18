@@ -6,7 +6,7 @@ import {
   OneToOne,
 } from 'typeorm';
 import { Driver } from './driver.entity';
-import { Request } from './request.entity';
+import { UserRequest } from './request.entity';
 
 @Entity('usuarios')
 export class User {
@@ -23,7 +23,7 @@ export class User {
   contrasena: string;
 
   @Column({ length: 100, nullable: true })
-  email?: string;
+  email: string;
 
   @Column({ length: 15, nullable: true }) // Agregado para el número de teléfono
   numero_telefono?: string;
@@ -40,6 +40,6 @@ export class User {
   @OneToOne(() => Driver, (driver) => driver.user)
   driver: Driver;
 
-  @OneToOne(() => Request, (request) => request.user)
+  @OneToOne(() => UserRequest, (request) => request.user)
   request: Request;
 }

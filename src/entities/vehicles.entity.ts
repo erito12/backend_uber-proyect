@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Driver } from './driver.entity';
-import { Request } from './request.entity';
+import { UserRequest } from './request.entity';
 
 @Entity('vehicle')
 export class Vehicle {
@@ -44,6 +44,6 @@ export class Vehicle {
   @JoinColumn({ name: 'id_chofer' })
   driver: Driver;
 
-  @OneToOne(() => Request, (request) => request.vehicle)
-  request: Request;
+  @OneToOne(() => UserRequest, (request) => request.vehicle)
+  request: UserRequest;
 }

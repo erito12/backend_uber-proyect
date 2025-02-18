@@ -28,6 +28,7 @@ export class VehicleController {
   ): Promise<Vehicle> {
     return this.vehicleService.createVehicle(createVehicleDto, driverId);
   }
+
   @Get('id/:id')
   @ApiResponse({ status: 204, description: 'Vehículo eliminado con éxito.' })
   @ApiResponse({ status: 404, description: 'Vehículo no encontrado.' })
